@@ -3,13 +3,126 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+    <h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Inscription</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.agreeTerms) }}
 
-        <button class="btn">Register</button>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(registrationForm.email,
+                    {'label': 'Adresse mail',
+                        'attr':{'placeholder': "Adresse mail"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+        {{ form_row(registrationForm.plainPassword,
+            {'label': 'Mot de passe',
+                'attr':{'placeholder': "Mot de passe"}}
+        )
+        }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.nom,
+                    {'label': 'Nom',
+                        'attr':{'placeholder': "Nom"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.prenom,
+                    {'label': 'Prenom',
+                        'attr':{'placeholder': "Prenom"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.societe,
+                    {'label': 'Societe',
+                        'attr':{'placeholder': "Societe"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.lang,
+                    {'label': 'Langue',
+                        'attr':{'placeholder': "Langue"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.telephone,
+                    {'label': 'Telephone',
+                        'attr':{'placeholder': "Telephone"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.gsm,
+                    {'label': 'Mobile',
+                        'attr':{'placeholder': "Mobile"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.siret,
+                    {'label': 'Siret',
+                        'attr':{'placeholder': "Siret"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.type_societe,
+                    {'label': 'Type de Societe',
+                        'attr':{'placeholder': "Type de Societe"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.cp,
+                    {'label': 'Code postal',
+                        'attr':{'placeholder': "Code postal"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.ville,
+                    {'label': 'ville',
+                        'attr':{'placeholder': "ville"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-6">
+                {{ form_row(registrationForm.pays,
+                    {'label': 'Pays',
+                        'attr':{'placeholder': "Pays"}}
+                )
+                }}
+            </div>
+
+            <div class="col-md-12">
+                {{ form_row(registrationForm.newsletter,
+                    {'label': 'Accepter les newsletter'}
+                )
+                }}
+            </div>
+
+        </div>
+        <button class="btn btn-success">S'inscrire</button>
+
     {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

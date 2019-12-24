@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $message = (new \Swift_Message('Hello Email'))
+            $message = (new \Swift_Message("Confirmation d'inscription"))
                 ->setFrom('send@example.com')
                 ->setTo($mail)
                 ->setBody(
