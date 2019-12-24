@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -10,13 +11,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="ggm_contact")
  * @ORM\Entity
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class GgmContact implements UserInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="pk_ggm_contact", type="integer", nullable=false)
+     * @ORM\Column(name="pk_ggm_contact", type="integer", nullable=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -25,245 +27,245 @@ class GgmContact implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="fk_contact", type="bigint", nullable=false)
+     * @ORM\Column(name="fk_contact", type="bigint", nullable=true)
      */
     private $fkContact;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=55, nullable=false)
+     * @ORM\Column(name="email", type="string", length=55, nullable=true)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=55, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=55, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=55, nullable=false)
+     * @ORM\Column(name="prenom", type="string", length=55, nullable=true)
      */
     private $prenom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="societe", type="string", length=255, nullable=false)
+     * @ORM\Column(name="societe", type="string", length=255, nullable=true)
      */
     private $societe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type_societe", type="string", length=255, nullable=false)
+     * @ORM\Column(name="type_societe", type="string", length=255, nullable=true)
      */
     private $typeSociete;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fk_tiers", type="string", length=55, nullable=false)
+     * @ORM\Column(name="fk_tiers", type="string", length=55, nullable=true)
      */
     private $fkTiers;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="interets", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="interets", type="text", length=65535, nullable=true)
      */
     private $interets;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fonction", type="string", length=55, nullable=false)
+     * @ORM\Column(name="fonction", type="string", length=55, nullable=true)
      */
     private $fonction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="siret", type="string", length=15, nullable=false)
+     * @ORM\Column(name="siret", type="string", length=15, nullable=true)
      */
     private $siret;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=15, nullable=false)
+     * @ORM\Column(name="telephone", type="string", length=15, nullable=true)
      */
     private $telephone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="gsm", type="string", length=15, nullable=false)
+     * @ORM\Column(name="gsm", type="string", length=15, nullable=true)
      */
     private $gsm;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rue1", type="string", length=35, nullable=false)
+     * @ORM\Column(name="rue1", type="string", length=35, nullable=true)
      */
     private $rue1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rue2", type="string", length=35, nullable=false)
+     * @ORM\Column(name="rue2", type="string", length=35, nullable=true)
      */
     private $rue2;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rue3", type="string", length=35, nullable=false)
+     * @ORM\Column(name="rue3", type="string", length=35, nullable=true)
      */
     private $rue3;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cp", type="string", length=10, nullable=false)
+     * @ORM\Column(name="cp", type="string", length=10, nullable=true)
      */
     private $cp;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ville", type="string", length=55, nullable=false)
+     * @ORM\Column(name="ville", type="string", length=55, nullable=true)
      */
     private $ville;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="taille", type="string", length=255, nullable=false)
+     * @ORM\Column(name="taille", type="string", length=255, nullable=true)
      */
     private $taille;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fk_agence", type="string", length=55, nullable=false)
+     * @ORM\Column(name="fk_agence", type="string", length=55, nullable=true)
      */
     private $fkAgence;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pays", type="string", length=35, nullable=false)
+     * @ORM\Column(name="pays", type="string", length=35, nullable=true)
      */
     private $pays;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="profil", type="string", length=255, nullable=false)
+     * @ORM\Column(name="profil", type="string", length=255, nullable=true)
      */
     private $profil;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pass", type="string", length=255, nullable=false)
+     * @ORM\Column(name="pass", type="string", length=255, nullable=true)
      */
     private $pass;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="newsletter", type="string", length=0, nullable=false)
+     * @ORM\Column(name="newsletter", type="string", length=0, nullable=true)
      */
     private $newsletter;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="import_crm", type="string", length=0, nullable=false)
+     * @ORM\Column(name="import_crm", type="string", length=0, nullable=true)
      */
     private $importCrm;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valide", type="string", length=1, nullable=false, options={"default"="'N'","fixed"=true})
+     * @ORM\Column(name="valide", type="string", length=1, nullable=true, options={"default"="'N'","fixed"=true})
      */
     private $valide = '\'N\'';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="catalogue", type="string", length=0, nullable=false)
+     * @ORM\Column(name="catalogue", type="string", length=0, nullable=true)
      */
     private $catalogue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cata_type", type="string", length=0, nullable=false)
+     * @ORM\Column(name="cata_type", type="string", length=0, nullable=true)
      */
     private $cataType;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lang", type="string", length=2, nullable=false, options={"default"="'FR'"})
+     * @ORM\Column(name="lang", type="string", length=2, nullable=true, options={"default"="'FR'"})
      */
     private $lang = '\'FR\'';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sub_date", type="string", length=55, nullable=false)
+     * @ORM\Column(name="sub_date", type="string", length=55, nullable=true)
      */
     private $subDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valide_par", type="string", length=255, nullable=false)
+     * @ORM\Column(name="valide_par", type="string", length=255, nullable=true)
      */
     private $validePar;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="valide_le", type="integer", nullable=false)
+     * @ORM\Column(name="valide_le", type="integer", nullable=true)
      */
     private $valideLe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="log_valid", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="log_valid", type="text", length=65535, nullable=true)
      */
     private $logValid;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="charge_dev", type="string", length=255, nullable=false)
+     * @ORM\Column(name="charge_dev", type="string", length=255, nullable=true)
      */
     private $chargeDev;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="last_log", type="integer", nullable=false)
+     * @ORM\Column(name="last_log", type="integer", nullable=true)
      */
     private $lastLog;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fk_crm_abo_news_ggm", type="string", length=255, nullable=false)
+     * @ORM\Column(name="fk_crm_abo_news_ggm", type="string", length=255, nullable=true)
      */
     private $fkCrmAboNewsGgm;
 
