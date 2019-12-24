@@ -16,8 +16,14 @@ class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param GuardAuthenticatorHandler $guardHandler
+     * @param AppAdminAuthenticator $authenticator
+     * @param \Swift_Mailer $mailer
+     * @return Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAdminAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAdminAuthenticator $authenticator, \Swift_Mailer $mailer): Response
     {
         $user = new GgmContact();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -25,12 +31,28 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $mail = $user->getEmail();
             $user->setPass(
                 $passwordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
+            $message = (new \Swift_Message('Hello Email'))
+                ->setFrom('send@example.com')
+                ->setTo($mail)
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/inscription.html.twig
+                        'emails/inscription.html.twig',
+                        ['mail' => $mail]
+                    ),
+                    'text/html'
+                )
+            ;
+
+            $mailer->send($message);
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
