@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\GgmContact;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,7 +55,12 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('societe', TextType::class, [
             ])
-            ->add('lang', TextType::class, [
+            ->add('lang', ChoiceType::class, [
+                'choices' => [
+                    'Français' => 'fr',
+                    'Anglais' => 'en',
+                ],
+                'preferred_choices' => ['fr'],
             ])
             ->add('telephone', TextType::class, [
             ])
@@ -62,21 +68,22 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('siret', TextType::class, [
             ])
-            ->add('type_societe', TextType::class, [
+
+            ->add('type_societe', ChoiceType::class, [
+                'choices' => [
+                    'Agriculteur' => 'Agriculteur',
+                    'Test' => 'Test',
+                ],
+                'preferred_choices' => ['fr'],
             ])
             ->add('cp', TextType::class, [
             ])
             ->add('ville', TextType::class, [
             ])
-            ->add('pays', ChoiceType::class, [
-                'choices' => [
-                    'France' => 'fr',
-                    'English' => 'en',
-                    'Spanish' => 'es',
-                    'Australie' => 'au',
-                ],
-                'preferred_choices' => ['fr', 'en'],
+            ->add('pays', CountryType::class, [
+                'preferred_choices' => ['FR',  'IO' , 'AU',  'BE'],
             ])
+            //->add('pays', CountryType::class, array())
             ->add('newsletter', CheckboxType::class, [
             ])
         ;

@@ -183,6 +183,25 @@ class GgmContact implements UserInterface
      *
      * @ORM\Column(name="newsletter", type="string", length=0, nullable=true)
      */
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $passwordRequestedAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $newsletter;
 
     /**
@@ -193,11 +212,11 @@ class GgmContact implements UserInterface
     private $importCrm;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="valide", type="string", length=1, nullable=true, options={"default"="'N'","fixed"=true})
+     * @ORM\Column(name="valide", type="boolean", nullable=true )
      */
-    private $valide = '\'N\'';
+    private $valide = true ;
 
     /**
      * @var string
@@ -218,7 +237,7 @@ class GgmContact implements UserInterface
      *
      * @ORM\Column(name="lang", type="string", length=2, nullable=true, options={"default"="'FR'"})
      */
-    private $lang = '\'FR\'';
+    private $lang = 'FR';
 
     /**
      * @var string
@@ -642,6 +661,40 @@ class GgmContact implements UserInterface
     {
         $this->pass = $pass;
 
+        return $this;
+    }
+
+    /*
+     * Get passwordRequestedAt
+     */
+    public function getPasswordRequestedAt()
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    /*
+     * Set passwordRequestedAt
+     */
+    public function setPasswordRequestedAt($passwordRequestedAt)
+    {
+        $this->passwordRequestedAt = $passwordRequestedAt;
+        return $this;
+    }
+
+    /*
+     * Get token
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /*
+     * Set token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
         return $this;
     }
 

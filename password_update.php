@@ -24,7 +24,7 @@ while ($donnees = $reponse->fetch())
     $options = [
         'cost' => 12,
     ];
-    // Si le pass est toujours en base64 alor on decode puis on encrypte en BCRYPT
+    // Si le pass est toujours en base64 alor on decode puis on encrypte en AEGON2ID
     if(strlen($donnees['pass']) < 50)
     {
         $new_password = password_hash(base64_decode($donnees['pass']), PASSWORD_ARGON2ID, $options);

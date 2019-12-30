@@ -69,7 +69,7 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('L\'email est introuvable.');
         }
 
         return $user;
@@ -96,7 +96,7 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse('login');
+        return new RedirectResponse('test');
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
