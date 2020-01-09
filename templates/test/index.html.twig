@@ -3,7 +3,8 @@
 {% block title %}Test index{% endblock %}
 
 {% block body %}
-    <h1>Test index</h1>
+<div class="container">
+    <h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Test index</h1>
 
     <table class="table">
         <thead>
@@ -34,4 +35,6 @@
     </table>
 
     <a href="{{ path('test_new') }}">Create new</a>
+
+</div>
 {% endblock %}

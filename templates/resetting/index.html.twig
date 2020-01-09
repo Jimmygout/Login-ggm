@@ -1,13 +1,20 @@
 
 {# resetting/index.html.twig #}
+{% extends 'base.html.twig' %}
 
-<div class="container">
-	<h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Renouvellement du mot de passe</h1>
+{% block title %}Hello ResettingController!{% endblock %}
 
-{{form_start(form)}}
-	{{form_row(form.plainPassword.first)}}
-	{{form_row(form.plainPassword.second)}}
-<button class=""  type="submit">Envoyer</button>
-{{form_end(form)}}
+{% block body %}
+	{# resetting/request.html.twig #}
+	<div class="container">
+		<h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Renouvellement du mot de passe</h1>
 
-</div>
+		{{form_start(form)}}
+		{{form_row(form.pass.first)}}
+		{{form_row(form.pass.second)}}
+		<button class="btn btn-success"  type="submit">Envoyer</button>
+		{{form_end(form)}}
+
+	</div>
+
+{% endblock %}

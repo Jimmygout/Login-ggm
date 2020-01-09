@@ -30,10 +30,15 @@
                 <input type="checkbox" name="_remember_me" checked>Se souvenir de moi
             </label>
         </div>
-
-    <button class="btn btn-lg btn-success" type="submit">
+<div class="text-center">
+    <button class="btn btn-success" type="submit">
         Se connecter
     </button>
+    <br><br>
+        <a class="btn btn-primary" href="{{ path('request_resetting') }}">Mot de passe oublié</a>
+
+</div>
+
 </form>
     </div>
 {% endblock %}

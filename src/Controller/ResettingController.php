@@ -61,8 +61,8 @@ class ResettingController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
+            $password = $passwordEncoder->encodePassword($user, $user->getPass());
+            $user->setPass($password);
 
             // réinitialisation du token à null pour qu'il ne soit plus réutilisable
             $user->setToken(null);
@@ -74,7 +74,7 @@ class ResettingController extends AbstractController
 
             $request->getSession()->getFlashBag()->add('success', "Votre mot de passe a été renouvelé.");
 
-            return $this->redirectToRoute('connexion');
+            return $this->redirectToRoute('app_login');
 
         }
 
