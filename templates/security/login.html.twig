@@ -4,9 +4,14 @@
 
 {% block body %}
     <div class="container">
+
 <form method="post">
+
+
+    <h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Connectez-vous !</h1>
+
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger mt-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
@@ -15,7 +20,6 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Connectez-vous !</h1>
     <label for="inputEmail">Adresse mail</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
     <label for="inputPassword">Mot de passe</label>
@@ -32,11 +36,12 @@
         </div>
 <div class="text-center">
     <button class="btn btn-success" type="submit">
-        Se connecter
+        Connexion
     </button>
-    <br><br>
-        <a class="btn btn-primary" href="{{ path('request_resetting') }}">Mot de passe oublié</a>
-
+    <br>
+    <a class="btn btn-primary mt-1" href="{{ path('request_resetting') }}">Mot de passe oublié</a>
+    <br>
+    <a class="btn btn-secondary mt-1" href="{{ path('app_register') }}">S'inscrire</a>
 </div>
 
 </form>
