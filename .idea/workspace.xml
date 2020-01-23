@@ -3,8 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="b4df6e1f-6d1a-4c66-822d-75a1122c21c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/password_update.php" beforeDir="false" afterPath="$PROJECT_DIR$/password_update.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GgmContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GgmContact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/MigrationVersions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/MigrationVersions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20191224093847.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20191230081703.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/GgmContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GgmContactRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/AppAdminAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAdminAuthenticator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/test/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/test/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,6 +160,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\site\symfony\Login-ggm\src\Controller" />
       <recent name="C:\xampp\htdocs\site\symfony\Login-ggm\templates\resetting" />
       <recent name="C:\xampp\htdocs\site\symfony\Login-ggm\src\Form" />
       <recent name="C:\xampp\htdocs\site\symfony\Login-ggm\src" />
@@ -180,6 +192,10 @@
       <workItem from="1577180122937" duration="30944000" />
       <workItem from="1577790291605" duration="5252000" />
       <workItem from="1579082129638" duration="10671000" />
+      <workItem from="1579253450501" duration="8604000" />
+      <workItem from="1579268759063" duration="2254000" />
+      <workItem from="1579276650280" duration="14155000" />
+      <workItem from="1579773353058" duration="4967000" />
     </task>
     <servers />
   </component>

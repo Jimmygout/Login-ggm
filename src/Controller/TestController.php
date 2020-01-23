@@ -83,6 +83,9 @@ class TestController extends AbstractController
 
     /**
      * @Route("/{id}", name="test_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Test $test
+     * @return Response
      */
     public function delete(Request $request, Test $test): Response
     {

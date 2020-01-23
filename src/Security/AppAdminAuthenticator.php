@@ -6,6 +6,7 @@ use App\Entity\GgmContact;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,6 +20,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -90,8 +93,34 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
         return $credentials['password'];
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token , $providerKey)
     {
+        /*Récuperation des infos pour initialiser les variable de sessions*/
+        /*
+        $user = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $request->request->get('email') ]);
+
+        $session = new Session();
+        $session->set('pk',  $request->request->get('email'));
+        $session->set('login', $request->request->get('email'));
+        $session->set('nom', $request->request->get('email'));
+        $session->set('prenom', $request->request->get('email'));
+        $session->set('lang', $request->request->get('email'));
+        $session->set('profil', $request->request->get('email'));
+        $session->set('societe', $request->request->get('email'));
+        $session->set('nom_societe', $request->request->get('email'));
+        $session->set('agence', $request->request->get('email'));
+        $session->set('cp', $request->request->get('email'));
+        $session->set('ville', $request->request->get('email'));
+        $session->set('pays', $request->request->get('email'));
+        $session->set('telephone', $request->request->get('email'));
+        $session->set('fax', $request->request->get('email'));
+        $session->set('listep', $request->request->get('email'));
+        $session->set('newsletter', $request->request->get('email'));
+
+
+        dump($user); die();
+//$test = $request->getSession();
+*/
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

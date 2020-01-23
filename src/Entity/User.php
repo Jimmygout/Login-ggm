@@ -61,7 +61,6 @@ class User
 
     public function getRoles(): ?string
     {
-		$roles[] = 'ROLE_USER';
         return $this->roles;
     }
 

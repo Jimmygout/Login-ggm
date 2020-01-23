@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GgmContact;
+use App\Entity\Contact;
 use App\Form\RegistrationFormType;
 use App\Security\AppAdminAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,12 +27,37 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAdminAuthenticator $authenticator, \Swift_Mailer $mailer): Response
     {
         $user = new GgmContact();
+        $contact = new Contact();
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $mail = $user->getEmail();
+            $contact
+                ->setmailContact($mail)
+                ->setnomContact($user->getNom())
+                ->setprenomContact($user->getPrenom())
+                ->settelContact($user->getEmail())
+                ->setmobileContact($user->getGsm())
+                ->setmailContact($user->getTelephone())
+                ->setpassword($passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                ))
+                ->setville($user->getVille())
+                ->setpays($user->getPays())
+                ->setlangCc($user->getLang())
+                ->setdateCre(time())
+                ->setsource('Inscription site Gigamedia')
+                ->setnewsletterGgm($user->getNewsletter());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contact);
+            $entityManager->flush();
+
+            dump($form); die;
             $user->setPass(
                 $passwordEncoder->encodePassword(
                     $user,

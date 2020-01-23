@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="ggm_contact")
  * @ORM\Entity
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Cette adresse Mail est deja utilisée")
  */
 class GgmContact implements UserInterface
 {
@@ -295,7 +295,7 @@ class GgmContact implements UserInterface
      */
     private $roles = [] ;
 
-/**
+    /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
