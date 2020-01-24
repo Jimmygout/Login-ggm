@@ -14,9 +14,8 @@ class Contact
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="pk_contact", type="bigint", nullable=true)
      * @ORM\Id
+     * @ORM\Column(name="pk_contact", type="bigint", nullable=true)
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $pkContact;
@@ -94,7 +93,7 @@ class Contact
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="password", type="text", length=65535, nullable=false)
      */
     private $password;
 
@@ -259,10 +258,6 @@ class Contact
      */
     private $fkCrmAboNewsWebco;
 
-    public function getPkContact(): ?string
-    {
-        return $this->pkContact;
-    }
 
     public function getFkTiers(): ?string
     {
@@ -672,5 +667,10 @@ class Contact
         return $this;
     }
 
+
+    public function getPkContact(): ?int
+    {
+        return $this->pkContact;
+    }
 
 }

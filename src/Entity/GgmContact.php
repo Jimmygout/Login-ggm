@@ -24,12 +24,7 @@ class GgmContact implements UserInterface
      */
     private $pkGgmContact;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="fk_contact", type="bigint", nullable=true)
-     */
-    private $fkContact;
+
 
     /**
      * @var string
@@ -37,6 +32,14 @@ class GgmContact implements UserInterface
      * @ORM\Column(name="email", type="string", length=55, nullable=true)
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="source", type="string", length=255, nullable=true)
+     */
+    private $source;
+
 
     /**
      * @var string
@@ -296,6 +299,13 @@ class GgmContact implements UserInterface
     private $roles = [] ;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="fk_contact", type="integer", nullable=true)
+     */
+    private $FkContact;
+
+    /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
      * @return string the string representation of the object or null
@@ -400,17 +410,6 @@ class GgmContact implements UserInterface
         return $this->pkGgmContact;
     }
 
-    public function getFkContact(): ?string
-    {
-        return $this->fkContact;
-    }
-
-    public function setFkContact(string $fkContact): self
-    {
-        $this->fkContact = $fkContact;
-
-        return $this;
-    }
 
     public function getEmail(): ?string
     {
@@ -603,6 +602,23 @@ class GgmContact implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getSource(): string
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param string $source
+     */
+    public function setSource(string $source): void
+    {
+        $this->source = $source;
+    }
+
 
     public function getTaille(): ?string
     {
@@ -850,6 +866,18 @@ class GgmContact implements UserInterface
     public function setFkCrmAboNewsGgm(string $fkCrmAboNewsGgm): self
     {
         $this->fkCrmAboNewsGgm = $fkCrmAboNewsGgm;
+
+        return $this;
+    }
+
+    public function getFkContact(): ?Contact
+    {
+        return $this->FkContact;
+    }
+
+    public function setFkContact(int $FkContact): self
+    {
+        $this->FkContact = $FkContact;
 
         return $this;
     }

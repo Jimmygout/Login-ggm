@@ -1,0 +1,1 @@
+ALTER TABLE ggm_contact ADD CONSTRAINT FK_D17793815A4250B7 FOREIGN KEY (fk_contact) REFERENCES contact (pk_contact)

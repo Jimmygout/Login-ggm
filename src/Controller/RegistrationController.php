@@ -35,6 +35,15 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $mail = $user->getEmail();
+
+            /****************************************************************
+             ********* Integration de l'utilisateur dans le CRM **************
+             *****************************************************************/
+
+
+            /****************************************************************
+            ********* Integration de l'utilisateur dans le CRM **************
+            *****************************************************************/
             $contact
                 ->setmailContact($mail)
                 ->setnomContact($user->getNom())
@@ -50,14 +59,25 @@ class RegistrationController extends AbstractController
                 ->setpays($user->getPays())
                 ->setlangCc($user->getLang())
                 ->setdateCre(time())
-                ->setsource('Inscription site Gigamedia')
+                ->setsource('gigamedia.net')
                 ->setnewsletterGgm($user->getNewsletter());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
+            //dump($contact->getPkContact()); die();
 
-            dump($form); die;
+            /*************** Fin Integration dans le CRM ***************/
+
+
+            /****************************************************************
+             ****** Integration de l'utilisateur dans les Contacts GGM *******
+             *****************************************************************/
+            $user
+                ->setFkContact($contact->getPkContact())
+                ->setsource('gigamedia.net');
+
+            //dump($form); die;
             $user->setPass(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -65,7 +85,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $message = (new \Swift_Message("Confirmation d'inscription"))
-                ->setFrom('send@example.com')
+                ->setFrom('jimmy.gout@conectis.com')
                 ->setTo($mail)
                 ->setBody(
                     $this->renderView(
@@ -83,6 +103,9 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            /*************** Fin Integration les Contacts GGM  ***************/
+
 
             // do anything else you need here, like send an email
 
