@@ -25,6 +25,13 @@ class GgmContact implements UserInterface
     private $pkGgmContact;
 
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="fk_contact", type="integer", nullable=true)
+     */
+    private $FkContact;
+
 
     /**
      * @var string
@@ -298,12 +305,7 @@ class GgmContact implements UserInterface
      */
     private $roles = [] ;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="fk_contact", type="integer", nullable=true)
-     */
-    private $FkContact;
+
 
     /**
      * String representation of object

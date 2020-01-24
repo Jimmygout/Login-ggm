@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b4df6e1f-6d1a-4c66-822d-75a1122c21c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Contact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/GgmContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GgmContact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200123102923.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200123103940.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200123105044.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/MigrationVersions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/MigrationVersions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Test.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +188,7 @@
       <workItem from="1579268759063" duration="2254000" />
       <workItem from="1579276650280" duration="14155000" />
       <workItem from="1579773353058" duration="18450000" />
-      <workItem from="1579852792823" duration="7091000" />
+      <workItem from="1579852792823" duration="9017000" />
     </task>
     <servers />
   </component>
