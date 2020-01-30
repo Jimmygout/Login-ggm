@@ -10,6 +10,21 @@
 
     <h1 class="h3 mb-3 font-weight-normal mt-3 text-center">Connectez-vous !</h1>
 
+    {# this check prevents starting a session when there are no flash messages #}
+    {% if app.request.hasPreviousSession %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+
     {% if error %}
         <div class="alert alert-danger mt-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}

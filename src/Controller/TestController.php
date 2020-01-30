@@ -30,6 +30,8 @@ class TestController extends AbstractController
 
     /**
      * @Route("/new", name="test_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -63,6 +65,9 @@ class TestController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="test_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Test $test
+     * @return Response
      */
     public function edit(Request $request, Test $test): Response
     {

@@ -17,13 +17,26 @@
                 }}
             </div>
 
-            <div class="col-md-6">
-        {{ form_row(registrationForm.plainPassword,
+
+
+             <div class="col-md-6">
+        {{ form_row(registrationForm.pass.first,
             {'label': 'Mot de passe',
                 'attr':{'placeholder': "Mot de passe"}}
         )
         }}
             </div>
+
+             <div class="col-md-6">
+        {{ form_row(registrationForm.pass.second,
+            {'label': 'Confirmation du mot de passe',
+                'attr':{'placeholder': "Confirmation du mot de passe"}}
+        )
+        }}
+            </div>
+
+
+
 
             <div class="col-md-6">
                 {{ form_row(registrationForm.nom,

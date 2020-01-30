@@ -222,11 +222,11 @@ class GgmContact implements UserInterface
     private $importCrm;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="valide", type="boolean", nullable=true )
+     * @ORM\Column(name="valide",length=0, type="string", nullable=true )
      */
-    private $valide = true ;
+    private $valide ;
 
     /**
      * @var string
@@ -305,6 +305,12 @@ class GgmContact implements UserInterface
      */
     private $roles = [] ;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="confirmAccount", type="string", length=255, nullable=true)
+     */
+    private $confirmAccount;
 
 
     /**
@@ -349,8 +355,6 @@ class GgmContact implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
 
@@ -872,7 +876,7 @@ class GgmContact implements UserInterface
         return $this;
     }
 
-    public function getFkContact(): ?Contact
+    public function getFkContact(): ?int
     {
         return $this->FkContact;
     }
@@ -882,6 +886,22 @@ class GgmContact implements UserInterface
         $this->FkContact = $FkContact;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmAccount(): string
+    {
+        return $this->confirmAccount;
+    }
+
+    /**
+     * @param string $confirmAccount
+     */
+    public function setConfirmAccount(string $confirmAccount): void
+    {
+        $this->confirmAccount = $confirmAccount;
     }
 
 }

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\GgmContact;
+use App\Entity\Contact;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Mailer;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -32,7 +34,7 @@ class ResettingController extends AbstractController
         $now = new \DateTime();
         $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
 
-        $daySeconds = 60 * 10;
+        $daySeconds = 60 * 60 * 24 ;
         $response = $interval > $daySeconds ? false : $reponse = true;
         return $response;
     }
@@ -45,12 +47,13 @@ class ResettingController extends AbstractController
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function resetting(GgmContact $user, $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function resetting(GgmContact $user ,  $token, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         // interdit l'accès à la page si:
         // le token associé au membre est null
         // le token enregistré en base et le token présent dans l'url ne sont pas égaux
         // le token date de plus de 10 minutes
+
         if ($user->getToken() === null || $token !== $user->getToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
         {
             throw new AccessDeniedHttpException();
@@ -61,14 +64,25 @@ class ResettingController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+
+            /** Recupération des données en table contact */
+            $em = $this->getDoctrine()->getManager();
+            /** Recupération des données en table contact en fonction de la fk de ggm contact */
+            $contact = $em->getRepository(Contact::class)->findOneBy(['pkContact' => $user->getFkContact()]);
+
             $password = $passwordEncoder->encodePassword($user, $user->getPass());
+
+            /** On reinitialise le mdp de la table ggm contact puis de contact (CRM) */
+            $contact->setPassword($password);
             $user->setPass($password);
+            //$contact->setPassword($password);
 
             // réinitialisation du token à null pour qu'il ne soit plus réutilisable
             $user->setToken(null);
             $user->setPasswordRequestedAt(null);
 
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($user);
             $em->flush();
 

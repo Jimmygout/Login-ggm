@@ -70,9 +70,18 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
 
         $user = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $credentials['email']]);
 
+        /** Message si le mail est introuvable **/
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('L\'email est introuvable.');
+        }
+
+        /** Message si le compte n'a pas encore etait validé */
+        $user_valide = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $credentials['email'], 'valide' => 'O']);
+
+        if (!$user_valide) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('Vous n\'avez pas encore valider votre compte');
         }
 
         return $user;

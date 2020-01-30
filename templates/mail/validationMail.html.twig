@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Validation du compte</title>
+</head>
+<body>
+<p>
+    Bonjour, <br>
+    Cliquez sur ce lien pour Valider votre compte.
+    {# pour que le lien fonctionne, il est indispensable que le lien soit absolu. #}
+    <a href="{{absolute_url(path( 'confirm_account', { 'token': user.confirmAccount , 'id': user.pkGgmContact }))}}">Valider mon compte</a>
+</p>
+</body>
+</html>

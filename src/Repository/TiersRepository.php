@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\GgmContact;
+use App\Entity\Tiers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -12,32 +12,25 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Alert[]    findAll()
  * @method Alert[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GgmContactRepository extends ServiceEntityRepository
+class TiersRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GgmContact::class);
+        parent::__construct($registry, Tiers::class);
     }
 
-    public function loadUserByUsername($username)
+    /*** Selection du dernier Tiers contenant CRM dans la clé ***/
+    public function findLast()
     {
         return $this->createQueryBuilder('u')
-            ->where('u.email = :email')
-            ->setParameter('email', $username)
+            ->where('u.pkTiers LIKE :key')
+            ->orderBy('u.id', 'DESC')
+            ->setMaxResults(1)
+            ->setParameter('key' , '%CRM%')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult() ;
     }
 
-    public function login($mail)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.email = :email')
-            ->andWhere('u.valide = O')
-            ->setParameter('email', $mail)
-            ->getQuery()
-            ->getResult();
-
-    }
 
 
 
