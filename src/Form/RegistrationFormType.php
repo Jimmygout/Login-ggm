@@ -77,10 +77,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('lang', ChoiceType::class, [
                 'choices' => [
-                    'Français' => 'fr',
-                    'Anglais' => 'en',
+                    'Français' => 'FR',
+                    'Anglais' => 'EN',
                 ],
-                'preferred_choices' => ['fr'],
+                'preferred_choices' => ['FR'],
             ])
             ->add('telephone', TextType::class, [
             ])

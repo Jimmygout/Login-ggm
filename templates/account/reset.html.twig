@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+    {% for user in users %}
+        <div class="col-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <input style="position: absolute;right: 10px;top: 10px;width: 18px;height: 18px;" type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <h4>votre compte</h4>
+                    <div class="card-text">Prenom : {{ user.prenom }}</div>
+                    <div class="card-text">Nom: {{ user.nom }}</div>
+                    <div class="card-text">Adresse mail : {{ user.email }}</div>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h4>vos favoris</h4>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <tr>
+            <td colspan="4">Pas de compte</td>
+        </tr>
+    {% endfor %}
+
+
+        </div>
+        </div>
+
+{% endblock %}

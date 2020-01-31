@@ -25,7 +25,8 @@ class GgmContactRepository extends ServiceEntityRepository
             ->where('u.email = :email')
             ->setParameter('email', $username)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
+            //->getOneOrNullResult();
     }
 
     public function login($mail)

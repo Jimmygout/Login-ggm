@@ -128,7 +128,14 @@ class ResettingController extends AbstractController
             // voir l'épisode 2 de cette série pour retrouver la méthode loadUserByUsername:
             // $user = $em->getRepository(GgmContact::class)->loadUserByUsername($form->getData()['email']);
             $user = $ggmContactRepository->loadUserByUsername($form->getData()['email']);
-            //dump($user); die();
+
+            /** Calcule du nombre de compte existant pour rediriger vers une page qui permet de choisir le compte à garder **/
+            $nombreCompte = count($user);
+            if( $nombreCompte > 1 ){
+                // redirect to a route with parameters
+                return $this->redirectToRoute('number_account');
+            }
+
             // aucun email associé à ce compte.
             if (!$user) {
                 $request->getSession()->getFlashBag()->add('warning', "Cet email n'existe pas.");

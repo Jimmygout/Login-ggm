@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="ggm_contact")
  * @ORM\Entity
- * @UniqueEntity(fields={"email"}, message="Cette adresse Mail est deja utilisée")
+ *
  */
 class GgmContact implements UserInterface
 {
