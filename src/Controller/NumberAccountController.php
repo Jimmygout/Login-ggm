@@ -47,10 +47,11 @@ class NumberAccountController extends AbstractController
      * @param Mailer $mailer
      * @param TokenGeneratorInterface $tokenGenerator
      * @param GgmContactRepository $ggmContactRepository
+     * @param Contact $contact
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @return Response
      */
-    public function reset(Request $request, Mailer $mailer, TokenGeneratorInterface $tokenGenerator, GgmContactRepository $ggmContactRepository ,  UserPasswordEncoderInterface $passwordEncoder)
+    public function reset(Request $request, Mailer $mailer, TokenGeneratorInterface $tokenGenerator, GgmContactRepository $ggmContactRepository,  UserPasswordEncoderInterface $passwordEncoder)
     {
 
         /*** Récupération des données du formulaire ***/
@@ -61,22 +62,29 @@ class NumberAccountController extends AbstractController
 
         /*** Recherche en bdd si l'utilisateur existe ***/
         $all_user = $ggmContactRepository->loadUserByUsername($mail_form);
+        $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form]);
+        dump($all_contact); die();
+        $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form]);
+
         $one_user = $em->getRepository(GgmContact::class)->findOneBy(['email' => $mail_form]);
         //$mdp_bdd = $one_user->getPass();
 
         /** Utilisation de la fonction pour savoir si le compte existe, Renvoie 'mdp_ok' */
         $verif_mdp = $this->compteExiste($all_user, $mdp_form);
+        $result = array_merge($all_user, $all_contact);
 
+        dump($result);
         if($verif_mdp)
         {
             return $this->render('account/reset.html.twig', [
                 'users' => $all_user ,
+                'contacts' => $all_contact
             ]);
         }
         /** Calcule du nombre de compte existant pour rediriger vers une page qui permet de choisir le compte à garder **/
         $nombreCompte = count($all_user);
 
-        die();
+
 
 
         // aucun email associé à ce compte.
@@ -96,5 +104,38 @@ class NumberAccountController extends AbstractController
         return $this->render('number_account/index.html.twig', [
             'Form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/delete-compte", name="delete_account")
+     *
+     */
+    public function delete()
+    {
+        dump($_POST); die();
+        /*** Récupération des données du formulaire ***/
+        $tab_delete = $_POST['delete'];
+
+        foreach ($tab_delete as $em_delete){
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            /*** Suppression en bdd ggm_contact en fonction des cases cochés ***/
+            $one_user = $entityManager->getRepository(GgmContact::class)->findOneBy(['pkGgmContact' => $em_delete]);
+            //$entityManager->remove($one_user);
+            //$entityManager->flush();
+
+            /*** Suppression CRM en bdd contact en fonction des cases cochés ***/
+            $one_contact = $entityManager->getRepository(Contact::class)->findOneBy(['pkContact' => $one_user->getFkContact()]);
+            //$entityManager->remove($one_contact);
+            //$entityManager->flush();
+
+            /*** Suppression Tiers en bdd tiers en fonction des cases cochés ***/
+            $one_tiers = $entityManager->getRepository(Tiers::class)->findOneBy(['pkTiers' => $one_contact->getFkTiers()]);
+            dump($one_tiers); die();
+            //$entityManager->remove($one_tiers);
+            //$entityManager->flush();
+        }
+        dump($tab_delete); die();
     }
 }

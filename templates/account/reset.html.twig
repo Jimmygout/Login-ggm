@@ -5,16 +5,32 @@
 {% block body %}
 
     <div class="container">
+        <h2 class="text-center mt-2 mb-2">Choisissez le compte à conserver</h2>
+        <form action="/delete-compte " method="post" >
         <div class="row">
+            {% for contact in contacts %}
+                test
+            {% endfor %}
     {% for user in users %}
         <div class="col-6">
             <div class="card shadow">
                 <div class="card-body">
-                    <input style="position: absolute;right: 10px;top: 10px;width: 18px;height: 18px;" type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <input style="position: absolute;right: 10px;top: 10px;width: 18px;height: 18px;" type="checkbox" name="delete[]" value="{{ user.pkGgmContact }}" class="form-check-input" id="exampleCheck1">
                     <h4>votre compte</h4>
+                    {% if user.valide == 'N' %}
+                        <div class="alert alert-danger" role="alert">
+                            Compte non validé
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success" role="alert">
+                            Compte validé le
+                        </div>
+                    {% endif %}
+
                     <div class="card-text">Prenom : {{ user.prenom }}</div>
                     <div class="card-text">Nom: {{ user.nom }}</div>
                     <div class="card-text">Adresse mail : {{ user.email }}</div>
+                    <div class="card-text">Type societe: {{ user.typeSociete }}</div>
                 </div>
                 <hr>
                 <div class="card-body">
@@ -29,9 +45,12 @@
             <td colspan="4">Pas de compte</td>
         </tr>
     {% endfor %}
-
+            <div class="col-12 text-center mt-4">
+                <button class="btn btn-danger">Valider</button>
+            </div>
 
         </div>
+        </form>
         </div>
 
 {% endblock %}
