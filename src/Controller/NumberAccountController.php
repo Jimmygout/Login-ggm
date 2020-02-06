@@ -63,15 +63,16 @@ class NumberAccountController extends AbstractController
         /*** Recherche en bdd si l'utilisateur existe ***/
         $all_user = $ggmContactRepository->loadUserByUsername($mail_form);
         $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form]);
-        dump($all_contact); die();
+
+
         $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form]);
 
-        $one_user = $em->getRepository(GgmContact::class)->findOneBy(['email' => $mail_form]);
-        //$mdp_bdd = $one_user->getPass();
+        $all_user = $ggmContactRepository->loadUserByUsername($mail_form);
 
         /** Utilisation de la fonction pour savoir si le compte existe, Renvoie 'mdp_ok' */
         $verif_mdp = $this->compteExiste($all_user, $mdp_form);
         $result = array_merge($all_user, $all_contact);
+
 
         dump($result);
         if($verif_mdp)

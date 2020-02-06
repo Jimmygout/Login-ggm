@@ -104,6 +104,7 @@ class RegistrationController extends AbstractController
              *****************************************************************/
             $user
                 ->setFkContact($contact->getPkContact())
+                ->setSubDate(time())
                 ->setsource('gigamedia.net');
 
             $user
@@ -172,7 +173,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/account/confirm/{id}/{token}", name="confirm_account")
+     * @Route("/validation-compte/{id}/{token}", name="confirm_account")
      * @param $token
      * @param $id
      * @return Response
@@ -185,6 +186,7 @@ class RegistrationController extends AbstractController
 
         if($token === $tokenExist) {
             $user->setValide('O');
+            $user->setvalideLe(time());
             $user->setRoles(["ROLE_USER"]);
             $em->persist($user);
             $em->flush();
