@@ -30,15 +30,39 @@ class GgmContactRepository extends ServiceEntityRepository
             //->getOneOrNullResult();
     }
 
+    public function loadOtherUser($username, $id_save)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email' )
+            ->andWhere('u.pkGgmContact != :idSave')
+            ->setParameters(array('email' => $username, 'idSave' =>  $id_save ))
+            ->getQuery()
+            ->getResult();
+        //->getOneOrNullResult();
+    }
+
+    /** Connexion avec compte valide */
     public function login($mail)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.email = :email')
-            ->andWhere('u.valide = O')
+            ->andWhere('u.valide = :O')
             ->setParameter('email', $mail)
+            ->setParameter('O', 'O')
             ->getQuery()
             ->getResult();
+    }
 
+    /** Un seul resultat avec compte validé */
+    public function onLogin($mail)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email = :email')
+            ->andWhere('u.valide = :O')
+            ->setParameter('email', $mail)
+            ->setParameter('O', 'O')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 

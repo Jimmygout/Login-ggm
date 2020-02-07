@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\GgmContact;
+use App\Repository\GgmContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,12 +62,18 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    /**
+     * @param mixed $credentials
+     * @param UserProviderInterface $userProvider
+     * @return object|UserInterface|null
+     */
+    public function getUser( $credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
+
 
         $user = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $credentials['email']]);
 

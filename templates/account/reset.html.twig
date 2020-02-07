@@ -5,93 +5,184 @@
 {% block body %}
 
     <div class="container">
-        <h2 class="text-center mt-2 mb-2">Choisissez le compte à conserver</h2>
+        <h2 class="text-center mt-2 mb-3">Choisissez le compte à conserver</h2>
+        <p class="text-center">
+            Appuyez sur un des bouttons pour voir les informations pour chacun de vos comptes, puis choisissez parmis ces comptes le plus proche de la réalité.
+        </p>
+        <p class="text-center">
+            Vous aurait par la suite la possibilité de modifier vos informations.
+        </p>
+    </br>
         <form action="/delete-compte " method="post" >
-        <div class="row">
+            <div class="row justify-content-md-center">
             {% set i = 1  %}
+            {% for user in users %}
+
+
+            <div class="col-2">
+                <button style="border: none; box-shadow: 5px 5px 5px #656565;" id="btn_{{ user.pkGgmContact }}" type="button" class="btn btn-primary pt-4 btn_open_modal" data-toggle="modal" data-target="#modal_compte{{ i }}">
+                   compte n° {{ i }}
+               </button>
+                <input required id="radio_{{ user.pkGgmContact }}" style="width: 18px;height: 18px;" type="radio" name="delete[]" value="{{ user.pkGgmContact }}" class="form-check-input radio_delete" id="exampleCheck1">
+            </div>
+            {% set i = i + 1  %}
+            {% endfor %}
+            </div>
+
+            <div class="col-12 text-center mt-4 ">
+                <a class="btn btn-danger text-white" data-toggle="modal" data-target="#valide_delete">Valider</a>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="valide_delete" tabindex="-1" role="dialog" aria-labelledby="valide_delete" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Les autre comptes vont étre supprimés voullez vous vraiment continuer ?
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button  type="button"  class="btn btn-primary mb-3" data-dismiss="modal">Annuler</button>
+                            <button class="btn btn-danger mb-3">Valider</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+            {% set v = 1  %}
     {% for user in users %}
-        <div class="col-6">
-            <div class="card shadow mt-4">
-                <div class="card-body">
-                    <input style="position: absolute;right: 10px;top: 10px;width: 18px;height: 18px;" type="checkbox" name="delete[]" value="{{ user.pkGgmContact }}" class="form-check-input" id="exampleCheck1">
-                    <h4 class="text-center mb-3">votre compte n° {{ i }}</h4>
-                    {% set i = i + 1 %}
-                    {% if user.valide == 'N' %}
-                        <div style="background-color: red" class="alert alert-danger" role="alert">
-                            Compte non validé, crée le {{ user.subDate|date("m/d/Y") }}
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal_compte{{ v }}" tabindex="-1" role="dialog" aria-labelledby="#modal_compte{{ v }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center m-auto">
+                        <h4 class="text-center ">Votre compte n° {{ v }}</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            {% set v = v + 1 %}
+                            {% if user.valide == 'N' %}
+                                <div style="background-color: red" class="alert alert-danger" role="alert">
+                                    Compte non validé, crée le {{ user.subDate|date("m/d/Y") }}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-success" role="alert">
+                                    Compte crée le {{ user.subDate|date("m/d/Y") }} et validé le {{ user.valideLe|date("m/d/Y") }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card-text"><span class="font-weight-bold">Prenom : </span> {{ user.prenom }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Nom: </span>{{ user.nom }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Adresse mail :</span> {{ user.email }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Téléphone :</span> {{ user.telephone }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Mobile :</span> {{ user.gsm }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Société: </span>{{ user.societe }}</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card-text"><span class="font-weight-bold">Type societe: </span>{{ user.typeSociete }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Fonction: </span>{{ user.fonction }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Pays: </span>{{ user.pays }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Code postal: </span>{{ user.cp }}</div>
+                                    <div class="card-text"><span class="font-weight-bold">Ville: </span>{{ user.ville }}</div>
+                                </div>
+                            </div>
                         </div>
-                    {% else %}
-                        <div class="alert alert-success" role="alert">
-                            Compte crée le {{ user.subDate|date("m/d/Y") }} et validé le {{ user.valideLe|date("m/d/Y") }}
-                        </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card-text"><span class="font-weight-bold">Prenom : </span> {{ user.prenom }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Nom: </span>{{ user.nom }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Adresse mail :</span> {{ user.email }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Téléphone :</span> {{ user.telephone }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Mobile :</span> {{ user.gsm }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Société: </span>{{ user.societe }}</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card-text"><span class="font-weight-bold">Type societe: </span>{{ user.typeSociete }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Fonction: </span>{{ user.fonction }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Pays: </span>{{ user.pays }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Code postal: </span>{{ user.cp }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Ville: </span>{{ user.ville }}</div>
+
+                        {% for contact in contacts %}
+                            {% if contact.pkContact == user.fkContact %}
+                                <hr>
+                                <div class="card-body">
+                                    <h4 class="text-center mb-2">CRM</h4>
+                                    <div class="alert alert-success" role="alert">
+                                        Compte integré au CRM
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card-text"><span class="font-weight-bold">Prenom : </span> {{ contact.prenomContact }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Nom: </span>{{ contact.nomContact }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Adresse mail :</span> {{ contact.mailContact }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Téléphone :</span> {{ contact.telContact}}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Mobile :</span> {{ contact.mobileContact}}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Société: </span>{{ user.societe }}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card-text"><span class="font-weight-bold">Type societe: </span>{{ user.typeSociete }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Fonction: </span>{{ contact.fonction }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Pays: </span>{{ contact.pays }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Ville: </span>{{ contact.ville }}</div>
+                                            <div class="card-text"><span class="font-weight-bold">Adresse: </span>{{ contact.adr }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {%  endif %}
+                        {% endfor %}
+
+                        <hr>
+                        <div class="card-body">
+                            <h4 class="text-center mb-2">vos favoris</h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        {### Boucle pour les favoris par utilisateur ###}
+                                        {% for favori in favoris %}
+                                            <ul class="list-group-flush"><span class="font-weight-bold">Nom de la liste :</span> {{ favori.description }}</ul>
+                                            {### Boucle tableau detail des favoris ###}
+                                            {% for detail_favori in detail_favoris %}
+                                                {### detail des favoris ###}
+                                                {% for tab_favori in detail_favori %}
+                                                    {### Récuperation favoris par clé primaire ###}
+                                                    {%  if tab_favori.fkPanier == favori.pkPanier %}
+                                                        <li class="list-group-item"><span class="font-weight-bold">Article :</span> {{tab_favori.fkArticle}} <span class="font-weight-bold"> Qte : {{tab_favori.qte}}</span></li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {# {% endif %} #}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
-
-                    {% for contact in contacts %}
-                        {% if contact.pkContact == user.fkContact %}
-                            <hr>
-                <div class="card-body">
-                    <h4 class="text-center mb-2">CRM</h4>
-                        <div class="alert alert-success" role="alert">
-                            Compte integré au CRM
-                        </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="card-text"><span class="font-weight-bold">Prenom : </span> {{ contact.prenomContact }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Nom: </span>{{ contact.nomContact }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Adresse mail :</span> {{ contact.mailContact }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Téléphone :</span> {{ contact.telContact}}</div>
-                            <div class="card-text"><span class="font-weight-bold">Mobile :</span> {{ contact.mobileContact}}</div>
-                            <div class="card-text"><span class="font-weight-bold">Société: </span>{{ user.societe }}</div>
-                        </div>
-                        <div class="col-6">
-                            <div class="card-text"><span class="font-weight-bold">Type societe: </span>{{ user.typeSociete }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Fonction: </span>{{ contact.fonction }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Pays: </span>{{ contact.pays }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Ville: </span>{{ contact.ville }}</div>
-                            <div class="card-text"><span class="font-weight-bold">Adresse: </span>{{ contact.adr }}</div>
-                        </div>
+                    <div class="modal-footer text-center m-auto">
+                         <button  type="button" value="{{ user.pkGgmContact }}" class="btn btn-primary btn_modale  btn-lg" data-dismiss="modal">Choisir</button>
                     </div>
-                </div>
-                        {%  endif %}
-                    {% endfor %}
-
-                <hr>
-                <div class="card-body">
-                    <h4 class="text-center mb-2">vos favoris</h4>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
                 </div>
             </div>
         </div>
+
     {% else %}
         <tr>
             <td colspan="4">Pas de compte</td>
         </tr>
     {% endfor %}
-            <div class="col-12 text-center mt-4">
-                <button class="btn btn-danger">Valider</button>
-            </div>
 
         </div>
-        </form>
-        </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $( ".btn_modale" ).click(function() {
+                var btn_value = $(this).attr("value");
+                $("#radio_"+ btn_value).prop('checked', true);
+                $(".btn_open_modal").css({"background-color": "#ce0000" });
+                $("#btn_"+btn_value).css({"background-color": "#00de00" });
+
+            });
+            $( ".radio_delete" ).change(function() {
+                var radio = $('input[type=radio]:checked').attr('value');
+                $(".btn_open_modal").css({"background-color": "#ce0000" });
+                $("#btn_"+radio).css({"background-color": "#00de00" });
+            });
+        });
+    </script>
 {% endblock %}

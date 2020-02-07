@@ -125,8 +125,7 @@ class ResettingController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
 
-            // voir l'épisode 2 de cette série pour retrouver la méthode loadUserByUsername:
-            // $user = $em->getRepository(GgmContact::class)->loadUserByUsername($form->getData()['email']);
+            /** Requete pour voir si il existe plusieur compte à cette adresse */
             $user = $ggmContactRepository->loadUserByUsername($form->getData()['email']);
 
             /** Calcule du nombre de compte existant pour rediriger vers une page qui permet de choisir le compte à garder **/
@@ -136,23 +135,26 @@ class ResettingController extends AbstractController
                 return $this->redirectToRoute('number_account');
             }
 
-            // aucun email associé à ce compte.
-            if (!$user) {
-                $request->getSession()->getFlashBag()->add('warning', "Cet email n'existe pas.");
+
+            $user_valide = $ggmContactRepository->onLogin($form->getData()['email']);
+
+            /** si aucun email n'à était validé. **/
+            if (!$user_valide) {
+                $request->getSession()->getFlashBag()->add('warning', "Cet email n'existe pas ou n'a pas était validé.");
                 return $this->redirectToRoute("request_resetting");
             }
 
             // création du token
-            $user->setToken($tokenGenerator->generateToken());
+            $user_valide->setToken($tokenGenerator->generateToken());
             // enregistrement de la date de création du token
-            $user->setPasswordRequestedAt(new \Datetime());
+            $user_valide->setPasswordRequestedAt(new \Datetime());
             $em->flush();
 
             // on utilise le service Mailer créé précédemment
             $bodyMail = $mailer->createBodyMail('resetting/mail.html.twig', [
-                'user' => $user
+                'user' => $user_valide
             ]);
-            $mailer->sendMessage('from@email.com', $user->getEmail(), 'renouvellement du mot de passe', $bodyMail);
+            $mailer->sendMessage('from@email.com', $user_valide->getEmail(), 'renouvellement du mot de passe', $bodyMail);
             $request->getSession()->getFlashBag()->add('success', "Un mail va vous être envoyé afin que vous puissiez renouveller votre mot de passe. Le lien que vous recevrez sera valide 24h.");
 
             return $this->redirectToRoute("request_resetting");
