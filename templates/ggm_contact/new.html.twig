@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GgmContact{% endblock %}
+
+{% block body %}
+    <h1>Create new GgmContact</h1>
+
+    {{ include('ggm_contact/_form.html.twig') }}
+
+    <a href="{{ path('ggm_contact_index') }}">back to list</a>
+{% endblock %}

@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * GgmContact
- *
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet e-mail")
  * @ORM\Table(name="ggm_contact")
  * @ORM\Entity
  *

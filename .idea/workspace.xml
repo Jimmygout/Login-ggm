@@ -3,13 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b4df6e1f-6d1a-4c66-822d-75a1122c21c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/NumberAccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/NumberAccountController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ResettingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ResettingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/GgmContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GgmContactRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/AppAdminAuthenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/AppAdminAuthenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/GgmContact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/GgmContact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/account/number.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account/number.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/account/reset.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/account/reset.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +140,7 @@
   <component name="ProjectId" id="1VO2E3gLU9MJEFCwY1LQBGGRMMz" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Repository" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -197,12 +193,25 @@
       <workItem from="1580461769177" duration="29601000" />
       <workItem from="1580913572509" duration="4907000" />
       <workItem from="1580976048597" duration="35804000" />
-      <workItem from="1581083243797" duration="2008000" />
+      <workItem from="1581083243797" duration="6120000" />
+      <workItem from="1581506093590" duration="17955000" />
+      <workItem from="1581589744763" duration="11171000" />
+      <workItem from="1582186137026" duration="675000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

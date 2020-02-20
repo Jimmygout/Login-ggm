@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GgmContact index{% endblock %}
+
+{% block body %}
+    <h1>GgmContact index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PkGgmContact</th>
+                <th>FkContact</th>
+                <th>Email</th>
+                <th>Source</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Societe</th>
+                <th>TypeSociete</th>
+                <th>FkTiers</th>
+                <th>Interets</th>
+                <th>Fonction</th>
+                <th>Siret</th>
+                <th>Telephone</th>
+                <th>Gsm</th>
+                <th>Rue1</th>
+                <th>Rue2</th>
+                <th>Rue3</th>
+                <th>Cp</th>
+                <th>Ville</th>
+                <th>Taille</th>
+                <th>FkAgence</th>
+                <th>Pays</th>
+                <th>Profil</th>
+                <th>Pass</th>
+                <th>PasswordRequestedAt</th>
+                <th>Token</th>
+                <th>Newsletter</th>
+                <th>ImportCrm</th>
+                <th>Valide</th>
+                <th>Catalogue</th>
+                <th>CataType</th>
+                <th>Lang</th>
+                <th>SubDate</th>
+                <th>ValidePar</th>
+                <th>ValideLe</th>
+                <th>LogValid</th>
+                <th>ChargeDev</th>
+                <th>LastLog</th>
+                <th>FkCrmAboNewsGgm</th>
+                <th>Roles</th>
+                <th>ConfirmAccount</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ggm_contact in ggm_contacts %}
+            <tr>
+                <td>{{ ggm_contact.pkGgmContact }}</td>
+                <td>{{ ggm_contact.FkContact }}</td>
+                <td>{{ ggm_contact.email }}</td>
+                <td>{{ ggm_contact.source }}</td>
+                <td>{{ ggm_contact.nom }}</td>
+                <td>{{ ggm_contact.prenom }}</td>
+                <td>{{ ggm_contact.societe }}</td>
+                <td>{{ ggm_contact.typeSociete }}</td>
+                <td>{{ ggm_contact.fkTiers }}</td>
+                <td>{{ ggm_contact.interets }}</td>
+                <td>{{ ggm_contact.fonction }}</td>
+                <td>{{ ggm_contact.siret }}</td>
+                <td>{{ ggm_contact.telephone }}</td>
+                <td>{{ ggm_contact.gsm }}</td>
+                <td>{{ ggm_contact.rue1 }}</td>
+                <td>{{ ggm_contact.rue2 }}</td>
+                <td>{{ ggm_contact.rue3 }}</td>
+                <td>{{ ggm_contact.cp }}</td>
+                <td>{{ ggm_contact.ville }}</td>
+                <td>{{ ggm_contact.taille }}</td>
+                <td>{{ ggm_contact.fkAgence }}</td>
+                <td>{{ ggm_contact.pays }}</td>
+                <td>{{ ggm_contact.profil }}</td>
+                <td>{{ ggm_contact.pass }}</td>
+                <td>{{ ggm_contact.passwordRequestedAt ? ggm_contact.passwordRequestedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ ggm_contact.token }}</td>
+                <td>{{ ggm_contact.newsletter }}</td>
+                <td>{{ ggm_contact.importCrm }}</td>
+                <td>{{ ggm_contact.valide }}</td>
+                <td>{{ ggm_contact.catalogue }}</td>
+                <td>{{ ggm_contact.cataType }}</td>
+                <td>{{ ggm_contact.lang }}</td>
+                <td>{{ ggm_contact.subDate }}</td>
+                <td>{{ ggm_contact.validePar }}</td>
+                <td>{{ ggm_contact.valideLe }}</td>
+                <td>{{ ggm_contact.logValid }}</td>
+                <td>{{ ggm_contact.chargeDev }}</td>
+                <td>{{ ggm_contact.lastLog }}</td>
+                <td>{{ ggm_contact.fkCrmAboNewsGgm }}</td>
+                <td>{{ ggm_contact.roles ? ggm_contact.roles|json_encode : '' }}</td>
+                <td>{{ ggm_contact.confirmAccount }}</td>
+                <td>
+                    <a href="{{ path('ggm_contact_show', {'pkGgmContact': ggm_contact.pkGgmContact}) }}">show</a>
+                    <a href="{{ path('ggm_contact_edit', {'pkGgmContact': ggm_contact.pkGgmContact}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="42">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ggm_contact_new') }}">Create new</a>
+{% endblock %}
