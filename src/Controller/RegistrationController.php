@@ -6,6 +6,7 @@ use App\Entity\GgmContact;
 use App\Entity\Contact;
 use App\Entity\Tiers;
 use App\Repository\TiersRepository;
+use App\Repository\ContactRepository;
 use App\Form\RegistrationFormType;
 use App\Security\AppAdminAuthenticator;
 use App\Services\Mailer;
@@ -21,6 +22,7 @@ class RegistrationController extends AbstractController
 {
     /**
      * @Route("/inscription", name="app_register")
+     * @param ContactRepository $contactRepository
      * @param TiersRepository $tiersRepository
      * @param TokenGeneratorInterface $tokenGenerator
      * @param Request $request
@@ -30,7 +32,7 @@ class RegistrationController extends AbstractController
      * @param Mailer $mailer
      * @return Response
      */
-    public function register(TiersRepository $tiersRepository, TokenGeneratorInterface $tokenGenerator,  Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAdminAuthenticator $authenticator, Mailer $mailer): Response
+    public function register(ContactRepository $contactRepository, TiersRepository $tiersRepository, TokenGeneratorInterface $tokenGenerator,  Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAdminAuthenticator $authenticator, Mailer $mailer): Response
     {
         $user = new GgmContact();
         $contact = new Contact();
@@ -42,6 +44,11 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $mail = $user->getEmail();
+            /** On recupere les données pour faire le filtre d'insertion **/
+            $existCcontact = $contactRepository->findOneBy(['mailContact' => $user->getEmail(), 'prenomContact' => $user->getPrenom(), 'nomContact' => $user->getNom()]);
+            /** Si le contact existe deja dans le CRM on ne l'ajoute pas dans le tiers et CRM */
+            //dump($contact); die();
+            if (!isset($existCcontact)){
 
             /****************************************************************
              ************** Integration dans la table Tiers *****************
@@ -73,27 +80,30 @@ class RegistrationController extends AbstractController
             ********* Integration de l'utilisateur dans le CRM **************
             *****************************************************************/
 
-            $contact
-                ->setFkTiers($tiers->getPkTiers())
-                ->setmailContact($user->getEmail())
-                ->setnomContact($user->getNom())
-                ->setprenomContact($user->getPrenom())
-                ->settelContact($user->getTelephone())
-                ->setmobileContact($user->getGsm())
-                ->setpassword($passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('pass')->getData()
-                ))
-                ->setville($user->getVille())
-                ->setpays($user->getPays())
-                ->setlangCc($user->getLang())
-                ->setdateCre(time())
-                ->setsource('gigamedia.net')
-                ->setnewsletterGgm($user->getNewsletter());
+                $contact
+                    ->setFkTiers($tiers->getPkTiers())
+                    ->setmailContact($user->getEmail())
+                    ->setnomContact($user->getNom())
+                    ->setprenomContact($user->getPrenom())
+                    ->settelContact($user->getTelephone())
+                    ->setmobileContact($user->getGsm())
+                    ->setpassword($passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('pass')->getData()
+                    ))
+                    ->setville($user->getVille())
+                    ->setpays($user->getPays())
+                    ->setlangCc($user->getLang())
+                    ->setdateCre(time())
+                    ->setsource('gigamedia.net')
+                    ->setnewsletterGgm($user->getNewsletter());
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contact);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($contact);
+                $entityManager->flush();
+
+
+
             //dump($contact->getPkContact()); die();
 
             /*************** Fin Integration dans le CRM ***************/
@@ -102,8 +112,12 @@ class RegistrationController extends AbstractController
             /****************************************************************
              ****** Integration de l'utilisateur dans les Contacts GGM *******
              *****************************************************************/
+
+            // Pas de clé CRM si il existe deja
             $user
-                ->setFkContact($contact->getPkContact())
+                ->setFkContact($contact->getPkContact());
+            }
+             $user
                 ->setSubDate(time())
                 ->setsource('gigamedia.net');
 

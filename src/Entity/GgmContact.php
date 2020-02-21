@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * GgmContact
- * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte avec cet e-mail")
+ * @UniqueEntity(fields={"email", "prenom", "nom"}, message="Il existe déjà un compte avec cet Email associé à votre prenom et nom")
  * @ORM\Table(name="ggm_contact")
  * @ORM\Entity
  *
@@ -410,6 +410,7 @@ class GgmContact implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
 
     public function getPkGgmContact(): ?int
     {

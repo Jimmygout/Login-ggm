@@ -49,6 +49,7 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
 
     public function getCredentials(Request $request)
     {
+
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
@@ -69,24 +70,33 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
      */
     public function getUser( $credentials, UserProviderInterface $userProvider)
     {
+
+
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
 
-
-        $user = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $credentials['email']]);
+        /**  On recupére tout les user aveec cette adresse mail **/
+        $users = $this->entityManager->getRepository(GgmContact::class)->findBy(['email' => $credentials['email']]);
+        $user = false;
+        /** @var Boucle pour trouver a quelle adresse corespond ce mot de passe **/
+        foreach ( $users as $oneUser) {
+            /** Si le mot de passe entré corespond au mot de passe de la BDD */
+            if ($this->passwordEncoder->isPasswordValid($oneUser, $credentials['password']) == true){
+                $user = $oneUser;
+            };
+        }
 
         /** Message si le mail est introuvable **/
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('L\'email est introuvable.');
+            throw new CustomUserMessageAuthenticationException('Le compte est introuvable.');
         }
 
         /** Message si le compte n'a pas encore etait validé */
-        $user_valide = $this->entityManager->getRepository(GgmContact::class)->findOneBy(['email' => $credentials['email'], 'valide' => 'O']);
 
-        if (!$user_valide) {
+        if ($user->GetValide() == 'N') {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Vous n\'avez pas encore valider votre compte');
         }

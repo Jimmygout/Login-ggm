@@ -58,6 +58,8 @@ class NumberAccountController extends AbstractController
 
         /*** Récupération des données du formulaire ***/
         $mail_form = $_POST['choix_compte_form']['email'];
+        $prenom = $_POST['choix_compte_form']['prenom'];
+        $nom = $_POST['choix_compte_form']['nom'];
         $mdp_form = $_POST['choix_compte_form']['plainPassword'];
 
         $em = $this->getDoctrine()->getManager();
@@ -96,7 +98,7 @@ class NumberAccountController extends AbstractController
         }
         else{
             $request->getSession()->getFlashBag()->add('error', "Mot de passe incorrecte ou compte non validé.");
-            return $this->redirectToRoute("number_account");
+            return $this->redirectToRoute("number_account",['prenom' => $prenom , 'nom' => $nom ]);
         }
 
     }

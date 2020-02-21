@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ResettingController!{% endblock %}
+{% block title %}Resetting{% endblock %}
 
 {% block body %}
     {# resetting/request.html.twig #}
@@ -21,11 +21,25 @@
         {% endfor %}
     {% endif %}
 
-    <p>Demandez à réinitialiser votre mot de passe en renseignant votre mail.</p>
+    <p>Demandez à réinitialiser votre mot de passe en renseignant vos informations.</p>
 
     {{form_start(form)}}
-    {{form_row(form.email)}}
-    <button class="btn btn-success"  type="submit">Envoyer</button>
+    <div class="row">
+        <div class="col-6">
+            {{form_row(form.prenom)}}
+        </div>
+        <div class="col-6">
+            {{form_row(form.nom)}}
+        </div>
+        <div class="col-12">
+            {{form_row(form.email)}}
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-success mt-3"  type="submit">Envoyer</button>
+    </div>
+
     {{form_end(form)}}
 
 </div>

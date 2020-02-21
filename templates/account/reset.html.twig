@@ -7,10 +7,10 @@
     <div class="container">
         <h2 class="text-center mt-2 mb-3">Choisissez le compte à conserver</h2>
         <p class="text-center">
-            Appuyez sur un des bouttons pour voir les informations pour chacun de vos comptes, puis choisissez parmis ces comptes le plus proche de la réalité.
+            Appuyez sur un des boutons pour voir les informations pour chacun de vos comptes, puis choisissez parmis ces comptes le plus proche de la réalité.
         </p>
         <p class="text-center">
-            Vous aurait par la suite la possibilité de modifier vos informations.
+            Vous aurez par la suite la possibilité de modifier vos informations.
         </p>
     </br>
         <form action="/delete-compte " method="post" >
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-
+{#
                         {% for contact in contacts %}
                             {% if contact.pkContact == user.fkContact %}
                                 <hr>
@@ -123,7 +123,7 @@
                                 </div>
                             {%  endif %}
                         {% endfor %}
-
+#}
                         <hr>
                         <div class="card-body">
                             <h4 class="text-center mb-2">vos favoris</h4>

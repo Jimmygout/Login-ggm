@@ -14,6 +14,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Form\ResettingType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -115,9 +116,25 @@ class ResettingController extends AbstractController
                 'constraints' => [
                     new Email(),
                     new NotBlank()
+                ],
+                'attr' => [
+                    'placeholder' => 'Email',
+                ]
+            ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom',
+                'attr' => [
+
+                    'placeholder' => 'Prénom',
+                ]
+            ])
+            ->add('nom', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Nom',
                 ]
             ])
             ->getForm();
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,17 +143,19 @@ class ResettingController extends AbstractController
 
 
             /** Requete pour voir si il existe plusieur compte à cette adresse */
-            $user = $ggmContactRepository->loadUserByUsername($form->getData()['email']);
+            $user = $ggmContactRepository->loadUserInfos($form->getData()['email'],$form->getData()['prenom'],$form->getData()['nom']);
 
             /** Calcule du nombre de compte existant pour rediriger vers une page qui permet de choisir le compte à garder **/
             $nombreCompte = count($user);
-            if( $nombreCompte > 1 ){
+
+            if( $nombreCompte > 1){
                 // redirect to a route with parameters
-                return $this->redirectToRoute('number_account');
+                return $this->redirectToRoute('number_account' ,['prenom' => $form->getData()['prenom'], 'nom' => $form->getData()['nom'] ]);
             }
 
 
-            $user_valide = $ggmContactRepository->onLogin($form->getData()['email']);
+            $user_valide = $ggmContactRepository->findOneBy(array('email' => $form->getData()['email'],'prenom' => $form->getData()['prenom'],'nom' => $form->getData()['nom'])) ;
+
 
             /** si aucun email n'à était validé. **/
             if (!$user_valide) {
@@ -146,6 +165,7 @@ class ResettingController extends AbstractController
 
             // création du token
             $user_valide->setToken($tokenGenerator->generateToken());
+
             // enregistrement de la date de création du token
             $user_valide->setPasswordRequestedAt(new \Datetime());
             $em->flush();

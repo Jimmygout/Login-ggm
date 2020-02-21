@@ -24,6 +24,27 @@
             <form action="/reset-compte " method="post" >
 
                 <div class="row">
+
+                    <div class="col-md-6">
+
+                        <div class="form-group"><label for="choix_compte_form_prenom" class="required">
+                                Prénom
+                            </label>
+                            <input type="text" id="choix_compte_form_prenom" name="choix_compte_form[prenom]" required="required" placeholder="Prénom" class="form-control"
+                                   value="{{ app.request.get('prenom') }}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group"><label for="choix_compte_form_nom" class="required">
+                                Prénom
+                            </label>
+                            <input type="text" id="choix_compte_form_nom" name="choix_compte_form[nom]" required="required" placeholder="Nom" class="form-control"
+                                   value="{{ app.request.get('nom') }}">
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
 
                         <div class="form-group"><label for="choix_compte_form_email" class="required">Adresse mail</label><input type="email" id="choix_compte_form_email" name="choix_compte_form[email]" required="required" placeholder="Adresse mail" class="form-control" value="jimmy.gout@hotmail.com"></div>

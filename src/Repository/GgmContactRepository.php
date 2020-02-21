@@ -30,6 +30,20 @@ class GgmContactRepository extends ServiceEntityRepository
             //->getOneOrNullResult();
     }
 
+    public function loadUserInfos($username, $prenom , $nom)
+    {
+        return $this->createQueryBuilder('u')
+            ->andwhere('u.email = :email')
+            ->andwhere('u.prenom = :prenom')
+            ->andwhere('u.nom = :nom')
+            ->setParameter('email', $username)
+            ->setParameter('prenom', $prenom)
+            ->setParameter('nom', $nom)
+            ->getQuery()
+            ->getResult();
+        //->getOneOrNullResult();
+    }
+
     public function loadOtherUser($username, $id_save)
     {
         return $this->createQueryBuilder('u')
@@ -52,20 +66,6 @@ class GgmContactRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    /** Un seul resultat avec compte validé */
-    public function onLogin($mail)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.email = :email')
-            ->andWhere('u.valide = :O')
-            ->setParameter('email', $mail)
-            ->setParameter('O', 'O')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-
 
 
     // /**
