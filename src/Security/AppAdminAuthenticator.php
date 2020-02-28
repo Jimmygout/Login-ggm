@@ -78,7 +78,7 @@ class AppAdminAuthenticator extends AbstractFormLoginAuthenticator implements Pa
         }
 
         /**  On recupére tout les user aveec cette adresse mail **/
-        $users = $this->entityManager->getRepository(GgmContact::class)->findBy(['email' => $credentials['email']]);
+        $users = $this->entityManager->getRepository(GgmContact::class)->findBy(['email' => $credentials['email'],'valide' => 'O']);
         $user = false;
         /** @var Boucle pour trouver a quelle adresse corespond ce mot de passe **/
         foreach ( $users as $oneUser) {

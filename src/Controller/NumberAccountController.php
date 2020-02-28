@@ -74,13 +74,13 @@ class NumberAccountController extends AbstractController
         if($verif_mdp)
         {
             /*** Recherche en bdd La liste des contact  ***/
-            $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form]);
+            $all_contact = $em->getRepository(Contact::class)->findBy(['mailContact' => $mail_form , 'prenomContact' => $prenom, 'nomContact' => $nom]);
 
             /*** Recherche en bdd La liste des favoris  ***/
             $all_favoris = $em->getRepository(GgmUserPanier::class)->findBy(['fkLogin' => $mail_form]);
 
             /*** Recherche en bdd La liste des utilisateur  ***/
-            $all_user = $em->getRepository(GgmContact::class)->findBy(['email' => $mail_form]);
+            $all_user = $em->getRepository(GgmContact::class)->findBy(['email' => $mail_form, 'prenom' => $prenom, 'nom' => $nom]);
 
             /*** Récuperation des element par liste de favoris ***/
             $detail_favoris = array();
@@ -105,37 +105,48 @@ class NumberAccountController extends AbstractController
 
     /**
      * @Route("/delete-compte", name="delete_account")
+     * @param GgmContact $user
      * @param GgmContactRepository $ggmContactRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete(GgmContactRepository $ggmContactRepository)
     {
-        //dump($_POST); die();
+
         /*** Récupération des données du formulaire ***/
-        $id_save = $_POST['delete'];
+
+        $id_save = $_POST['id_save'];
+        $prenom = $_POST['prenom'];
+        $nom = $_POST['nom'];
         $entityManager = $this->getDoctrine()->getManager();
 
             /*** Récupération en bdd ggm_contact en fonction des cases cochés ***/
             $one_user = $entityManager->getRepository(GgmContact::class)->findOneBy(['pkGgmContact' => $id_save]);
+
             /** Récupération des utilisateurs non cochés pour le supprimer **/
-            $other_users = $ggmContactRepository->loadOtherUser($one_user->GetEmail(), $id_save);
+            $other_users = $ggmContactRepository->loadOtherUser($one_user->GetEmail(), $id_save, $prenom, $nom);
 
             foreach ($other_users as $one_user)
             {
-            /*** Suppression utilisateur ggm ***/
-            $entityManager->remove($one_user);
-            $entityManager->flush();
+            /*** Les utilisateurs passe en non valide ( D : pour pouvoir toper les utilisateurs et faire un lien CRM  ***/
+                $one_user->setValide('D');
+                $entityManager->persist($one_user);
+                $entityManager->flush();
+
+            //$entityManager->remove($one_user);
+            //$entityManager->flush();
 
             /*** Suppression CRM en bdd contact en fonction des cases cochés ***/
+            /*
             $one_contact = $entityManager->getRepository(Contact::class)->findOneBy(['pkContact' => $one_user->getFkContact()]);
             $entityManager->remove($one_contact);
             $entityManager->flush();
-
+            */
             /*** Suppression Tiers en bdd tiers en fonction des cases cochés ***/
-
+            /*
             $one_tiers = $entityManager->getRepository(Tiers::class)->findOneBy(['pkTiers' => $one_contact->getFkTiers()]);
             $entityManager->remove($one_tiers);
             $entityManager->flush();
+            */
             }
         return $this->redirectToRoute("request_resetting");
         //dump($tab_delete); die();

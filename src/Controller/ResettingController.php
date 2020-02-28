@@ -142,8 +142,8 @@ class ResettingController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
 
-            /** Requete pour voir si il existe plusieur compte à cette adresse */
-            $user = $ggmContactRepository->loadUserInfos($form->getData()['email'],$form->getData()['prenom'],$form->getData()['nom']);
+            /** Requete pour voir si il existe plusieur compte valide à cette adresse */
+            $user = $ggmContactRepository->loadUserInfosValide($form->getData()['email'],$form->getData()['prenom'],$form->getData()['nom']);
 
             /** Calcule du nombre de compte existant pour rediriger vers une page qui permet de choisir le compte à garder **/
             $nombreCompte = count($user);
@@ -154,7 +154,7 @@ class ResettingController extends AbstractController
             }
 
 
-            $user_valide = $ggmContactRepository->findOneBy(array('email' => $form->getData()['email'],'prenom' => $form->getData()['prenom'],'nom' => $form->getData()['nom'])) ;
+            $user_valide = $ggmContactRepository->findOneBy(array('email' => $form->getData()['email'],'prenom' => $form->getData()['prenom'],'nom' => $form->getData()['nom'],'valide' => 'O')) ;
 
 
             /** si aucun email n'à était validé. **/

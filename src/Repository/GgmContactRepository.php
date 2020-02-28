@@ -30,26 +30,38 @@ class GgmContactRepository extends ServiceEntityRepository
             //->getOneOrNullResult();
     }
 
-    public function loadUserInfos($username, $prenom , $nom)
+    public function loadUserInfosValide($username, $prenom , $nom)
     {
         return $this->createQueryBuilder('u')
             ->andwhere('u.email = :email')
             ->andwhere('u.prenom = :prenom')
             ->andwhere('u.nom = :nom')
+            ->andwhere('u.valide = :oui')
             ->setParameter('email', $username)
             ->setParameter('prenom', $prenom)
             ->setParameter('nom', $nom)
+            ->setParameter('oui', 'O')
             ->getQuery()
             ->getResult();
         //->getOneOrNullResult();
     }
 
-    public function loadOtherUser($username, $id_save)
+    /**
+     * Chargement des utilisateurs avec un id, prenom, nom different de l'id en donnée
+     * Utilisé pour : - Suppression des utilisateurs avec plusieurs compte
+     * @param $username
+     * @param $id_save
+     * @return mixed
+     *
+     */
+    public function loadOtherUser($username, $id_save, $prenom, $nom)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.email = :email' )
             ->andWhere('u.pkGgmContact != :idSave')
-            ->setParameters(array('email' => $username, 'idSave' =>  $id_save ))
+            ->andWhere('u.prenom = :prenom')
+            ->andWhere('u.nom = :nom')
+            ->setParameters(array('email' => $username, 'idSave' =>  $id_save, 'prenom' =>  $prenom, 'nom' =>  $nom ))
             ->getQuery()
             ->getResult();
         //->getOneOrNullResult();

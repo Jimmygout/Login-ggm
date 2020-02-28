@@ -13,61 +13,18 @@
             Vous aurez par la suite la possibilité de modifier vos informations.
         </p>
     </br>
-        <form action="/delete-compte " method="post" >
-            <div class="row justify-content-md-center">
-            {% set i = 1  %}
-            {% for user in users %}
+    </div>
 
-
-            <div class="col-2">
-                <button style="border: none; box-shadow: 5px 5px 5px #656565;" id="btn_{{ user.pkGgmContact }}" type="button" class="btn btn-primary pt-4 btn_open_modal" data-toggle="modal" data-target="#modal_compte{{ i }}">
-                   compte n° {{ i }}
-               </button>
-                <input required id="radio_{{ user.pkGgmContact }}" style="width: 18px;height: 18px;" type="radio" name="delete[]" value="{{ user.pkGgmContact }}" class="form-check-input radio_delete" id="exampleCheck1">
-            </div>
-            {% set i = i + 1  %}
-            {% endfor %}
-            </div>
-
-            <div class="col-12 text-center mt-4 ">
-                <a class="btn btn-danger text-white" data-toggle="modal" data-target="#valide_delete">Valider</a>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="valide_delete" tabindex="-1" role="dialog" aria-labelledby="valide_delete" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            Les autre comptes vont étre supprimés voullez vous vraiment continuer ?
-                        </div>
-                        <div class="col-12 text-center mt-4">
-                            <button  type="button"  class="btn btn-primary mb-3" data-dismiss="modal">Annuler</button>
-                            <button class="btn btn-danger mb-3">Valider</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </form>
-
+    <div class="container">
+        <div class="row justify-content-md-center">
             {% set v = 1  %}
     {% for user in users %}
 
-
-        <!-- Modal -->
-        <div class="modal fade" id="modal_compte{{ v }}" tabindex="-1" role="dialog" aria-labelledby="#modal_compte{{ v }}" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header text-center m-auto">
-                        <h4 class="text-center ">Votre compte n° {{ v }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card-body">
+            <div class="card p-0 col-md-5 m-4">
+                    <div class="card-body  card{{ user.pkGgmContact }}">
+                        <div class="col-md-12">
                             {% set v = v + 1 %}
-                            {% if user.valide == 'N' %}
+                            {% if user.valide != 'O' %}
                                 <div style="background-color: red" class="alert alert-danger" role="alert">
                                     Compte non validé, crée le {{ user.subDate|date("m/d/Y") }}
                                 </div>
@@ -76,6 +33,7 @@
                                     Compte crée le {{ user.subDate|date("m/d/Y") }} et validé le {{ user.valideLe|date("m/d/Y") }}
                                 </div>
                             {% endif %}
+                            <hr>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="card-text"><span class="font-weight-bold">Prenom : </span> {{ user.prenom }}</div>
@@ -93,6 +51,11 @@
                                     <div class="card-text"><span class="font-weight-bold">Ville: </span>{{ user.ville }}</div>
                                 </div>
                             </div>
+
+                            <div class="col-12 text-center  mt-3">
+                                <button  type="button" value="{{ user.pkGgmContact }}" class="btn btn-primary btn_modale btn-lg m-auto" data-dismiss="modal">Choisir</button>
+                            </div>
+
                         </div>
 {#
                         {% for contact in contacts %}
@@ -124,10 +87,9 @@
                             {%  endif %}
                         {% endfor %}
 #}
-                        <hr>
-                        <div class="card-body">
+<!-- Afficher liste des favoris
+                        <div class="col-md-12">
                             <h4 class="text-center mb-2">vos favoris</h4>
-                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         {### Boucle pour les favoris par utilisateur ###}
@@ -144,19 +106,17 @@
                                                 {% endfor %}
                                                 {# {% endif %} #}
                                             {% endfor %}
+
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div>
-
                         </div>
+-->
+
+
                     </div>
-                    <div class="modal-footer text-center m-auto">
-                         <button  type="button" value="{{ user.pkGgmContact }}" class="btn btn-primary btn_modale  btn-lg" data-dismiss="modal">Choisir</button>
-                    </div>
-                </div>
             </div>
-        </div>
+
 
     {% else %}
         <tr>
@@ -165,6 +125,48 @@
     {% endfor %}
 
         </div>
+    </div>
+
+{#  Validation choix du compte  #}
+
+    <form  action="/delete-compte " method="post" >
+        <div style="display: none" class="row justify-content-md-center">
+            {% set i = 1  %}
+            {% for user in users %}
+
+
+                <div class="col-2">
+                    <button style="border: none; box-shadow: 5px 5px 5px #656565;" id="btn_{{ user.pkGgmContact }}" type="button" class="btn btn-primary pt-4 btn_open_modal" data-toggle="modal" data-target="#modal_compte{{ i }}">
+                        compte n° {{ i }}
+                    </button>
+                    <input required id="radio_{{ user.pkGgmContact }}" style="width: 18px;height: 18px;" type="radio" name="id_save" value="{{ user.pkGgmContact }}" class="form-check-input radio_delete" id="exampleCheck1">
+                    <input type="hidden" id="prenom" name="prenom" value="{{ user.prenom }}" id="prenom">
+                    <input type="hidden" id="nom" name="nom" value="{{ user.nom }}" id="prenom">
+                </div>
+                {% set i = i + 1  %}
+            {% endfor %}
+        </div>
+
+        <div class="col-12 text-center mt-4 ">
+            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#valide_delete">Valider</a>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="valide_delete" tabindex="-1" role="dialog" aria-labelledby="valide_delete" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Les autre comptes vont étre supprimés voullez vous vraiment continuer ?
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button  type="button"  class="btn btn-primary mb-3" data-dismiss="modal">Annuler</button>
+                        <button class="btn btn-danger mb-3">Valider</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
 
 {% endblock %}
 
@@ -174,14 +176,17 @@
             $( ".btn_modale" ).click(function() {
                 var btn_value = $(this).attr("value");
                 $("#radio_"+ btn_value).prop('checked', true);
-                $(".btn_open_modal").css({"background-color": "#ce0000" });
-                $("#btn_"+btn_value).css({"background-color": "#00de00" });
-
+                $(".btn_open_modal").css({"background-color": "rgba(206, 0, 0, 0.55)" });
+                $(".card-body").css({"background-color": "rgba(206, 0, 0, 0.55)" });
+                $("#btn_"+btn_value).css({"background-color": "rgba(0, 222, 0, 0.44)" });
+                $(".card"+btn_value).css({"background-color": "rgba(0, 222, 0, 0.44)" });
             });
             $( ".radio_delete" ).change(function() {
                 var radio = $('input[type=radio]:checked').attr('value');
-                $(".btn_open_modal").css({"background-color": "#ce0000" });
-                $("#btn_"+radio).css({"background-color": "#00de00" });
+                $(".btn_open_modal").css({"background-color": "rgba(206, 0, 0, 0.55)" });
+                $(".card-body").css({"background-color": "rgba(0, 222, 0, 0.44)" });
+                $("#btn_"+radio).css({"background-color": "rgba(0, 222, 0, 0.44)" });
+                $(".card"+btn_value).css({"background-color": "rgba(0, 222, 0, 0.44)" });
             });
         });
     </script>
